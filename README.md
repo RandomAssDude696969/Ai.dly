@@ -2,6 +2,9 @@
 
 AI.dly is a modular, high-utility Flask backend server designed to process data from various sources (webpages, PDFs, YouTube transcripts) and augment them using advanced language models via Together AI, along with fully free language translation.
 
+## Inspiration
+I had made this project when the only such implementation was Sider.ai (I didn't know about GitHub at that time), and when I had to do a school research project, but ran out of commands on it. I had even used this in a Techfest, but had sadly missed out on the first prize by an inch.
+
 ## Features
 
 * **AI Chat with Session Memory**: Multi-turn conversation processing using flagship serverless LLMs.
@@ -37,10 +40,10 @@ brew install yt-dlp curl
 
 ### 2. Clone & Set Up Virtual Environment
 ```bash
-git clone https://github.com
-cd aidly-backend
+git clone https://github.com/RandomAssDude696969/Ai.dly/main
+cd Ai.dly/ai.dly
 python3 -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
+source venv/bin/activate  # On Windows use: venv\Scripts\activate.bat
 ```
 
 ### 3. Install Dependencies
@@ -105,3 +108,77 @@ The server will boot locally at http://127.0.0.
   ```json
   { "url": "https://youtube.com" }
   ```
+## System Architecture
+
+```text
+┌─────────────────────────────────────────────┐
+│               Chrome Extension              │
+├─────────────────────────────────────────────┤
+│ Chat UI                                     │
+│ Essay Generator                             │
+│ PDF Upload Interface                        │
+│ Webpage Summarizer                          │
+│ Translation Interface                       │
+└───────────────────┬─────────────────────────┘
+                    │ REST API (JSON)
+                    ▼
+┌─────────────────────────────────────────────┐
+│                Flask Backend                │
+├─────────────────────────────────────────────┤
+│ Routing Layer                               │
+│ Session Memory Management                   │
+│ Request Validation                          │
+│ Response Formatting                         │
+└───────┬──────────┬──────────┬──────────┬────┘
+        │          │          │          │
+        ▼          ▼          ▼          ▼
+
+┌────────────┐ ┌──────────┐ ┌──────────┐ ┌──────────────┐
+│ TogetherAI │ │ PyMuPDF  │ │ BS4      │ │ DeepTranslator│
+│ LLM Engine │ │ PDF Parse│ │ Web Parse│ │ Translation   │
+└─────┬──────┘ └──────────┘ └──────────┘ └──────────────┘
+      │
+      ▼
+┌─────────────────────────────────────────────┐
+│ Chat Generation                             │
+│ Essay Generation                            │
+│ Summarization                               │
+│ Context-Aware Responses                     │
+└─────────────────────────────────────────────┘
+
+                    ▲
+                    │
+          ┌─────────┴─────────┐
+          │ Transcript Layer  │
+          ├───────────────────┤
+          │ yt-dlp            │
+          │ youtube-transcript│
+          └───────────────────┘
+```
+
+## Request Flow Example
+
+```text
+User Prompt
+    │
+    ▼
+Chrome Extension
+    │
+POST /chat
+    │
+    ▼
+Flask Backend
+    │
+Session Context Injection
+    │
+    ▼
+Together AI API
+    │
+LLM Response
+    │
+    ▼
+JSON Response
+    │
+    ▼
+Extension UI Render
+```
