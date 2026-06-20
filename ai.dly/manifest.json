@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "AI.dly",
+  "version": "2.0.5",
+  "description": "Chat with AI + Read PDFs + Webpages + Tools",
+  "permissions": [
+  "activeTab",
+  "tabs",
+  "scripting"
+],
+"extension_pages": "script-src 'self'; object-src 'self'",
+  "host_permissions": [
+  "http://127.0.0.1/*",
+  "http://localhost/*"],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/oses.png"],
+      "matches": ["<all_urls>"]
+    }
+],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/icon16.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI.dly</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    .button {
+      background-color: #00d47f; /* Green */
+      border: none;
+      color: white;
+      padding: 16px 25px;
+      text-align: center;
+      text-decoration:double;
+      font-size: 16px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+      border-radius: 13px;
+      overflow-x:visible;
+    }
+    .pdfbutton {
+      background-color: #00d47f; /* Green */
+      border: none;
+      color: white;
+      padding: 16px 16px;
+      width: 600px;
+      text-align: center;
+      text-decoration:double;
+      font-size: 16px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor:pointer;
+      border-radius: 13px;
+      overflow-x:scroll;
+    }
+    body { font-family: sans-serif; width: 600px; height: 1000px; background-color:rgb(0, 0, 0); color: white; }
+    .user { font-weight: bold; text-align: right; padding: 10px; font-size: 20px; }
+    .bot { color: rgb(214, 220, 213); text-align: left; font-size: 20px; padding: 10px; }
+    .ai { color: rgb(213, 213, 221); color: rgb(214, 220, 213); text-align: left; font-size: 20px; padding: 10px; }
+    h3{text-align: center;}
+    h1, h2 {color: white; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}
+    #chat-form { display: flex; margin-top: 10px;border-radius: 13px; color:aliceblue;background-color:rgb(17, 0, 0); font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; width: 600px; align-items: center;height: 80px; flex-direction: row;}
+    #messages { height: 300px;border-radius: 13px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #222; color: white; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}
+    #pdfcontainer { margin-top: 20px; color:aliceblue;background-color:rgb(0, 0, 0); font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}
+    .send-button{width:130px; height: 60px;border-radius: 13px; margin-left: 10px; text-align:center; background-color: #00c3ff; color: rgb(5, 5, 5); border: none; padding: 10px 20px; cursor: pointer; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px;}
+    #message-input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;border-radius: 23px; background-color: #333; color: white; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}
+    .send-button:hover { background-color:rgba(1, 60, 44, 0.625);color:rgb(255, 255, 255); }
+    .button:hover { background-color:whitesmoke;color:black; }
+    .pdfbutton:hover { background-color:whitesmoke;color:black; }
+    #loader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.8);
+      z-index: 999;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 6px solid #ccc;
+      border-top: 6px solid #007bff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <h1 text-align="left">Hi,</h1>
+  <h2 text-align="left">How can I help you today?&#x1F600;</h2>
+  <div id="messages"></div>
+  <form id="chat-form">
+    <input type="text" id="message-input" placeholder="Ask something brilliant......" />
+    <button class="send-button" type="submit">Send</button>
+  </form>
+
+  <button class="button" id="essay">Write Essay</button>
+  <button class="button" id="paraphrase">Paraphrase</button>
+  <button class="button" id="translate">Translate</button>
+  <button class="button" id="readWebpageBtn">Read Webpage</button>
+  <div id = "pdfcontainer">
+    <button class = "pdfbutton"><input type="file" id="pdfUpload" accept="application/pdf"/>Upload PDF to read</button>
+  </div>
+  <button class="button" id="youtube_summary" style =" width: 550px">Summarize YouTube Video<h6>For the best experience, use the videos with pre-written transcripts</h6></button>
+
+  <br><br><hr color="rgb(255,255,255)"><br>
+  <p><i><h3 text-align="center" style="color:rgb(255,255,255); font-weight:300">AI.dly<br><br>Developed by Ekam Bhutani</h3></i></p>
+  <script src="popup.js"></script>
+  <!-- Loader Spinner -->
+<div id="loader-container" style="
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background:#9e8e8e5e;
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  pointer-events: all;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 24px;
+  color: #333;
+"></div>
+  <div style="
+    width: 48px;
+    height: 48px;
+    border: 6px solid #9e8e8e5e;
+    border-top: 6px solid #00d47f;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  "></div>
+  <div style ="font-size: 24px">
+    <br> <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Let Me Cook!
+</div>
+
+<style>
+  @keyframes spin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+
+</body>
+</html>
