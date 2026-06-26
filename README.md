@@ -32,8 +32,8 @@ I had made this project when the only such implementation was Sider.ai (I didn't
 1) Create a free account at Together AI.
 2) Navigate to the API Keys section in your dashboard.
 3) Generate a new API key.
-4) Copy the generated key and keep it secure.
-5) Set the key as an environment variable before starting the server.
+4) Copy the generated key and keep it secure for later use.
+5) Paste the key in the variable placeholder in the app.py as a string.
 
 ### 1. System Dependencies
 This project utilizes the command-line utility `yt-dlp` and system `curl` to extract streaming subtitles. Ensure they are installed on your host machine environment:
