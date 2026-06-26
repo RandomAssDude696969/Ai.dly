@@ -56,6 +56,12 @@ export TOGETHER_API_KEY="your_actual_together_api_token_here"
 # On Windows PowerShell: \$env:TOGETHER_API_KEY="your_actual_together_api_token_here"
 ```
 
+If you are using this method, please make sure to update the code properly to the following:
+```code
+TOGETHER_API_KEY = os.environ.get('TOGETHER_API_KEY') 
+```
+You can skip this if you want to, but this is recommended for extra security.
+
 ### 5. Run the Server
 ```bash
 python app.py
